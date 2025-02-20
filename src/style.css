@@ -1,1 +1,48 @@
 @import "tailwindcss";
+
+@layer base {
+    body {
+        @apply bg-[#282a36] text-[#f29c46];
+    }
+}
+
+.grid-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    gap: 1px;
+    background: #282a36;
+    z-index: 0;
+}
+
+.cell {
+    width: 100%;
+    height: 100%;
+    background: #2d2f3d;
+    transition: transform 0.2s ease-out, background-color 0.2s ease-out;
+}
+
+.cell.alive {
+    background: #383a4d;
+    transform: scale(0.95);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+    }
+
+    50% {
+        transform: scale(1);
+        background: #424559;
+    }
+
+    100% {
+        transform: scale(0.95);
+        background: #383a4d;
+    }
+}
