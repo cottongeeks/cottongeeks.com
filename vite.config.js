@@ -7,4 +7,7 @@ export default defineConfig({
   build: {
     emptyOutDir: true,
   },
+  server: {
+    host: true,
+  },
 })
