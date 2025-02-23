@@ -1,4 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap');
 @import "tailwindcss";
+
+@theme {
+    --font-poppins: Poppins, sans-serif;
+}
 
 @layer base {
     body {
@@ -14,7 +19,6 @@
     height: 100vh;
     display: grid;
     gap: 1px;
-    background: #282a36;
     z-index: 0;
 }
 
@@ -45,4 +49,8 @@
         transform: scale(0.95);
         background: #383a4d;
     }
+}
+
+code {
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 }
