@@ -4,28 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cottongeeks LLC</title>
-    <script type="module" src="/src/style.css"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <style>
+      body { background-color: #282a36; }
+    </style>
+    <link rel="stylesheet" href="/src/style.css">
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
-    <div id="grid" class="grid-container"></div>
-    <div class="fixed top-0 left-0 w-full flex flex-col items-center p-8 z-10">
-      <img src="/cottongeeks.svg" alt="Cottongeeks LLC" class="w-xl mb-8" />
-      <div class="max-w-2xl font-poppins text-2xl font-[200]">
-        <p class="mb-6">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        </p>
-        <p class="mb-6">
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae <a href="https://en.wikipedia.org/wiki/Vitae" class="text-[#ffeecb]">vitae</a> dicta <a href="https://en.wikipedia.org/wiki/Sunt" class="text-[#ffeecb]">sunt explicabo</a>.
-        </p>
+      <div id="grid" class="grid-container"></div>
+      <div class="min-h-screen flex flex-col">
+        <div class="w-full flex flex-col items-center relative z-10 flex-grow">
+          <img src="/cottongeeks.svg" alt="Cottongeeks LLC" class="w-xl mb-8" />
+          <div class="max-w-2xl font-poppins text-2xl font-[200] px-8">
+            <p class="mb-6">
+              Cottongeeks is a boutique software consultancy led by <a href="https://www.linkedin.com/in/debugjois" class="text-[#ffeecb]">Deepak Jois</a>, a software engineer with over 15 years of industry experience. We partner with startup founders and small businesses to transform their ideas into robust, production-ready solutions using modern technology stacks including Go, Python, TypeScript, WASM, Docker, and AWS.
+            </p>
+            <p class="mb-6">
+              From building proof-of-concepts and APIs to scaling prototypes for production deployment, we provide end-to-end software development services with a focus on security and scalability. Our commitment to continuous learning is reflected in our training services and <a href="#" class="text-[#ffeecb]">regularly updated blog</a>, where we share technical insights and best practices from our project experiences.
+            </p>
 
-        <p>
-          Please contact <code class="text-[#ffeecb]">debugjois@cottongeeks.com</code>
-        </p>
+            <p>
+              Email us at <code class="text-[#ffeecb]">debugjois@cottongeeks.com</code>
+            </p>
+          </div>
+        </div>
+        <div class="w-full text-center font-poppins text-sm font-[200] relative z-10 py-4">
+          © 2025 Cottongeeks LLC. All Rights Reserved.
+        </div>
       </div>
-    </div>
-    <div class="fixed bottom-4 w-full text-center font-poppins text-sm font-[200]">
-      © 2025 Cottongeeks LLC. All Rights Reserved.
-    </div>
   </body>
 </html>
