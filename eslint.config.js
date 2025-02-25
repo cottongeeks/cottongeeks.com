@@ -1,7 +1,6 @@
 import js from '@eslint/js'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
-import prettier from 'eslint-plugin-prettier'
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -19,12 +18,6 @@ export default tseslint.config(
         project: ['./tsconfig.json'],
         tsconfigRootDir: import.meta.dirname,
       },
-    },
-    plugins: {
-      prettier,
-    },
-    rules: {
-      ...prettier.configs.recommended.rules,
     },
   },
 )
