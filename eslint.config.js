@@ -1,7 +1,7 @@
 import js from '@eslint/js'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
-
+import eslintPluginAstro from 'eslint-plugin-astro'
 export default tseslint.config(
   { ignores: ['dist'] },
   {
@@ -9,6 +9,7 @@ export default tseslint.config(
       js.configs.recommended,
       ...tseslint.configs.recommendedTypeChecked,
       ...tseslint.configs.stylisticTypeChecked,
+      ...eslintPluginAstro.configs.recommended,
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
