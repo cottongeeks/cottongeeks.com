@@ -1,3 +1,7 @@
+---
+import '../styles/index.css';
+---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -14,7 +18,10 @@
       }
     </style>
     <link rel="stylesheet" href="/src/style.css" />
-    <script type="module" src="/src/main.ts"></script>
+    <script>
+	  import { GameOfLife } from '../game.ts';
+	  new GameOfLife('grid')
+    </script>
   </head>
   <body>
     <div id="grid" class="grid-container"></div>
@@ -44,7 +51,7 @@
         </div>
       </div>
       <div class="font-poppins relative z-10 w-full py-4 text-center text-sm font-[200]">
-        © 2025 Cottongeeks LLC. All Rights Reserved.
+        © {new Date().getFullYear()} Cottongeeks LLC. All Rights Reserved.
       </div>
     </div>
   </body>
