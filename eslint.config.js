@@ -3,7 +3,7 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 import eslintPluginAstro from 'eslint-plugin-astro'
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', '.astro'] },
   {
     extends: [
       js.configs.recommended,
