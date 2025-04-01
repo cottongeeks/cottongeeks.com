@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
 
 const articles = await getCollection('articles', ({ data }) => {
   return !data.draft
@@ -7,6 +8,12 @@ const articles = await getCollection('articles', ({ data }) => {
 
 // Sort articles by date
 articles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+
+function getArticleUrl(article: CollectionEntry<'articles'>) {
+  const date = article.data.date
+  const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+  return `/articles/${formattedDate}-${article.slug}.html`
+}
 ---
 
 <!doctype html>
@@ -24,7 +31,7 @@ articles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
           articles.map(article => (
             <article class="border-b border-gray-200 pb-8">
               <h2 class="mb-2 text-2xl font-semibold text-gray-900">
-                <a href={`/articles/${article.slug}`} class="hover:text-blue-600">
+                <a href={getArticleUrl(article)} class="hover:text-blue-600">
                   {article.data.title}
                 </a>
               </h2>
