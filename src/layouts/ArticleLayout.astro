@@ -1,4 +1,6 @@
 ---
+import '../styles/articles.css'
+
 interface Props {
   title: string
   date: Date
@@ -8,17 +10,17 @@ const { title, date } = Astro.props
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
   </head>
-  <body class="bg-gray-50">
+  <body>
     <main class="mx-auto max-w-3xl px-4 py-8">
       <article class="prose lg:prose-xl">
         <header class="mb-8">
-          <h1 class="mb-2 text-4xl font-bold text-gray-900">{title}</h1>
+          <h1 class="mb-2 text-4xl font-bold">{title}</h1>
           <time class="text-gray-500" datetime={date.toISOString()}>
             {
               date.toLocaleDateString('en-US', {
