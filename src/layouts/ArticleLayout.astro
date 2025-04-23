@@ -24,6 +24,12 @@ const { title, date } = Astro.props
         document.documentElement.classList.toggle('dark', theme === 'dark')
       }
     </script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+      integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
+      crossorigin="anonymous"
+    />
   </head>
   <body class="transition-colors duration-200">
     <main class="mx-auto max-w-3xl px-4 py-8">
