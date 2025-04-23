@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 import ArticleLayout from '../../layouts/ArticleLayout.astro'
 
 export async function getStaticPaths() {
@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   return articles.map(article => {
     const date = article.data.date
     const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
-    const htmlSlug = `${formattedDate}-${article.slug}`
+    const htmlSlug = `${formattedDate}-${article.data.slug}`
     return {
       params: {
         slug: htmlSlug,
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const { article } = Astro.props
-const { Content } = await article.render()
+const { Content } = await render(article)
 ---
 
 <ArticleLayout title={article.data.title} date={article.data.date}>
