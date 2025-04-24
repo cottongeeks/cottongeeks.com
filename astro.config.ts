@@ -4,6 +4,7 @@ import react from '@astrojs/react'
 import tailwindcss from '@tailwindcss/vite'
 
 import mdx from '@astrojs/mdx'
+import embeds from 'astro-embed/integration'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import rehypeSlug from 'rehype-slug'
@@ -11,7 +12,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), mdx()],
+  integrations: [react(), embeds(), mdx()],
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [
