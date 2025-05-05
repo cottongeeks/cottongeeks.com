@@ -9,10 +9,11 @@ import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import buildCompletion from './src/integrations/build-completion'
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), embeds(), mdx()],
+  integrations: [react(), embeds(), mdx(), buildCompletion()],
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [
