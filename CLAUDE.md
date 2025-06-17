@@ -34,7 +34,7 @@ npm run fmt:check
 - **Astro 5.9.4** - Static site generator with file-based routing
 - **React 19.1.0** - For interactive components (selective hydration)
 - **TypeScript** - With strict configuration
-- **Tailwind CSS 4.1.10** - For styling with Typography plugin
+- **Tailwind CSS 4.1.10** - For styling
 - **MDX** - For content with React component support
 - **KaTeX** - For mathematical expressions
 
