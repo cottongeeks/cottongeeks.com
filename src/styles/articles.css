@@ -6,4 +6,77 @@
 @import '@webtui/css/components/typography.css';
 
 /* Theme */
-@import '@webtui/theme-gruvbox';
+@import '@webtui/theme-catppuccin';
+
+/* Typography spacing using TUI-appropriate units - scoped to article content */
+article {
+  h1 {
+    margin-top: 2lh;
+    margin-bottom: 1.5lh;
+  }
+
+  h2 {
+    margin-top: 1.75lh;
+    margin-bottom: 1.25lh;
+  }
+
+  h3 {
+    margin-top: 1.5lh;
+    margin-bottom: 1lh;
+  }
+
+  h4,
+  h5,
+  h6 {
+    margin-top: 1.25lh;
+    margin-bottom: 0.75lh;
+  }
+
+  p {
+    margin-bottom: 1.5lh;
+    margin-right: 2ch;
+    line-height: 1.6;
+  }
+
+  ul,
+  ol {
+    margin-bottom: 1lh;
+  }
+
+  li {
+    margin-bottom: 0.5lh;
+  }
+
+  pre {
+    margin-top: 1lh;
+    margin-bottom: 1lh;
+    padding: 1lh 2ch;
+  }
+
+  blockquote {
+    margin-top: 1lh;
+    margin-bottom: 1lh;
+    padding-left: 2ch;
+  }
+
+  code:not(pre code) {
+    padding: 0 0.5ch;
+  }
+
+  /* Heading anchor links */
+  .heading-anchor {
+    opacity: 0;
+    margin-left: 0.5ch;
+    transition: opacity 0.2s ease;
+    text-decoration: none;
+  }
+
+  h1:hover .heading-anchor,
+  h2:hover .heading-anchor,
+  h3:hover .heading-anchor,
+  h4:hover .heading-anchor,
+  h5:hover .heading-anchor,
+  h6:hover .heading-anchor {
+    opacity: 1;
+  }
+}
