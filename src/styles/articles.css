@@ -2,6 +2,31 @@
 @import 'tailwindcss';
 @import '@webtui/css/base.css';
 
+/* Toast notification styles */
+.toast {
+  position: fixed;
+  top: 2ch;
+  right: 2ch;
+  background: var(--webtui-color-bg-accent);
+  color: var(--webtui-color-text);
+  padding: 1ch 2ch;
+  border-radius: 0.5ch;
+  border: 1px solid var(--webtui-color-border);
+  opacity: 0;
+  transform: translateY(-1ch);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  font-family: var(--webtui-font-mono);
+  font-size: 0.875rem;
+  max-width: 20ch;
+  word-wrap: break-word;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Components */
 @import '@webtui/css/components/typography.css';
 
