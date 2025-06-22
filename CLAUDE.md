@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is **Cottongeeks.com**, a static website/blog for Cottongeeks LLC consultancy built with Astro 5.9.4. The site features articles written in MDX with full React component support, Conway's Game of Life as homepage background, and dark/light theme switching.
+This is **cottongeeks.com**, a static website/blog for Cottongeeks LLC consultancy built with Astro (latest version). The site features articles written in MDX with full React component support, Conway's Game of Life as homepage background.
 
 ## Development Commands
 
@@ -35,6 +35,7 @@ npm run fmt:check
 - **React 19.1.0** - For interactive components (selective hydration)
 - **TypeScript** - With strict configuration
 - **Tailwind CSS 4.1.10** - For styling
+- **WebTUI** - For styling
 - **MDX** - For content with React component support
 - **KaTeX** - For mathematical expressions
 
@@ -53,11 +54,6 @@ npm run fmt:check
 - **MDX Support**: Full React component imports in articles
 - **RSS Feed**: Auto-generated at `/rss.xml`
 
-### Theme System
-- Dark/light mode toggle with localStorage persistence
-- CSS custom properties for theme switching
-- Implemented in `ArticleLayout.astro:108-130`
-
 ### Interactive Features
 - Conway's Game of Life homepage background (`game.ts`)
 - React components within MDX content
@@ -71,10 +67,12 @@ npm run fmt:check
 3. Use `draft: true` for unpublished articles
 4. Articles auto-appear in `/articles` listing
 
-### Theme Development
-- Theme toggle logic in `ArticleLayout.astro`
-- CSS variables defined for both themes
-- Tailwind classes use theme-aware colors
+### Style Development
+- We are trying to emulate the look of a Terminal based application, using WebTUI
+- Use context7 mcp to read Tailwind CSS 4 and WebTUI docs
+- User webtui gitmcp server to read the code for the webtui website in the web/ subfolder
+- NEVER use tailwind for padding and margin of text elements. Only use them for divs
+- Use ch and lh for specifying padding and margin for text elements, and populate them in the articles.css file.
 
 ### Interactive Components
 - React components in `src/components/`
