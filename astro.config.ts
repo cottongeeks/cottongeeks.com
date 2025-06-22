@@ -23,7 +23,7 @@ export default defineConfig({
         {
           behavior: 'append',
           properties: { ariaHidden: true, tabIndex: -1, class: 'heading-anchor' },
-          content: { type: 'text', value: '#' },
+          content: { type: 'text', value: '¶' },
         },
       ],
     ],
