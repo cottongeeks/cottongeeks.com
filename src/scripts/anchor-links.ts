@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         navigator.clipboard
           .writeText(url)
-          .then(() => showToast('copied to clipboard!'))
+          .then(() => showToast('link copied!'))
           .catch(err => {
             console.error('Failed to copy link:', err)
             showToast('Failed to copy link')
