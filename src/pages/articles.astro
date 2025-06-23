@@ -22,21 +22,21 @@ import '../styles/articles.css'
 <html lang="en" data-webtui-theme="catppuccin-mocha">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <title>Articles</title>
   </head>
   <body>
-    <main class="mx-auto max-w-3xl px-4 py-8">
-      <h1 class="mb-8 font-bold">Articles</h1>
-      <div class="space-y-8">
-        {
-          articles.map(article => (
-            <article class="border-b border-gray-200 pb-8">
-              <h2 class="mb-2 font-semibold">
-                <a href={getArticleUrl(article)} class="hover:text-blue-600">
-                  {article.data.title}
-                </a>
-              </h2>
+    <main class="mx-auto max-w-3xl">
+      <h1>Articles</h1>
+      {
+        articles.map(article => (
+          <>
+            <h2>
+              <a href={getArticleUrl(article)}>{article.data.title}</a>
               <time class="text-gray-500" datetime={article.data.date.toISOString()}>
                 {article.data.date.toLocaleDateString('en-US', {
                   year: 'numeric',
@@ -44,10 +44,10 @@ import '../styles/articles.css'
                   day: 'numeric',
                 })}
               </time>
-            </article>
-          ))
-        }
-      </div>
+            </h2>
+          </>
+        ))
+      }
     </main>
   </body>
 </html>

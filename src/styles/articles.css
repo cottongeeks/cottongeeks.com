@@ -2,6 +2,12 @@
 @import 'tailwindcss';
 @import '@webtui/css/base.css';
 
+@layer base {
+  :root {
+    --line-height: 1.5;
+  }
+}
+
 /* Toast notification styles */
 .toast {
   position: fixed;
@@ -33,75 +39,56 @@
 /* Theme */
 @import '@webtui/theme-catppuccin';
 
-/* Typography spacing using TUI-appropriate units - scoped to article content */
-article {
-  h1 {
-    margin-top: 2lh;
-    margin-bottom: 1.5lh;
-  }
+/* Article content layout - TUI style */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 1lh;
+}
 
-  h2 {
-    margin-top: 1.75lh;
-    margin-bottom: 1.25lh;
-  }
+/* Header prefixes in markdown style */
+h1::before {
+  content: '# ';
+}
 
-  h3 {
-    margin-top: 1.5lh;
-    margin-bottom: 1lh;
-  }
+h2::before {
+  content: '## ';
+}
 
-  h4,
-  h5,
-  h6 {
-    margin-top: 1.25lh;
-    margin-bottom: 0.75lh;
-  }
+h3::before {
+  content: '### ';
+}
 
-  p {
-    margin-bottom: 1.5lh;
-    margin-right: 2ch;
-    line-height: 1.6;
-  }
+h4::before {
+  content: '#### ';
+}
 
-  ul,
-  ol {
-    margin-bottom: 1lh;
-  }
+h5::before {
+  content: '##### ';
+}
 
-  li {
-    margin-bottom: 0.5lh;
-  }
+h6::before {
+  content: '###### ';
+}
 
-  pre {
-    margin-top: 1lh;
-    margin-bottom: 1lh;
-    padding: 1lh 2ch;
-  }
+/* Heading anchor links */
+.heading-anchor {
+  opacity: 0;
+  margin-left: 0.5ch;
+  transition: opacity 0.2s ease;
+  text-decoration: none;
+}
 
-  blockquote {
-    margin-top: 1lh;
-    margin-bottom: 1lh;
-    padding-left: 2ch;
-  }
+h1:hover .heading-anchor,
+h2:hover .heading-anchor,
+h3:hover .heading-anchor,
+h4:hover .heading-anchor,
+h5:hover .heading-anchor,
+h6:hover .heading-anchor {
+  opacity: 1;
+}
 
-  code:not(pre code) {
-    padding: 0 0.5ch;
-  }
-
-  /* Heading anchor links */
-  .heading-anchor {
-    opacity: 0;
-    margin-left: 0.5ch;
-    transition: opacity 0.2s ease;
-    text-decoration: none;
-  }
-
-  h1:hover .heading-anchor,
-  h2:hover .heading-anchor,
-  h3:hover .heading-anchor,
-  h4:hover .heading-anchor,
-  h5:hover .heading-anchor,
-  h6:hover .heading-anchor {
-    opacity: 1;
-  }
+/* Code block padding */
+pre {
+  padding: 1lh 1ch;
 }
