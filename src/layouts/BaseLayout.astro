@@ -4,9 +4,10 @@ import Nav from '../components/Nav.astro'
 
 interface Props {
   title: string
+  backlinkToArticles?: boolean
 }
 
-const { title } = Astro.props
+const { title, backlinkToArticles } = Astro.props
 
 const currentYear = new Date().getFullYear()
 const copyrightYear = currentYear === 2025 ? '2025' : `2025-${currentYear}`
@@ -28,7 +29,7 @@ const copyrightYear = currentYear === 2025 ? '2025' : `2025-${currentYear}`
   </head>
   <body>
     <main class="mx-auto max-w-3xl">
-      <Nav />
+      <Nav backlinkToArticles={backlinkToArticles} />
       <slot />
     </main>
     <footer class="footer">

@@ -1,5 +1,14 @@
+---
+interface Props {
+  backlinkToArticles?: boolean
+}
+
+const { backlinkToArticles = false } = Astro.props
+---
+
 <header class="nav-header">
   <div class="nav-content">
+    {backlinkToArticles && <a href="/articles">←</a>}
     <div class="nav-brand"><a href="/">cottongeeks &lt;/&gt;</a></div>
     <div class="nav-links">
       <a href="https://github.com/cottongeeks" target="_blank" rel="noopener noreferrer"
