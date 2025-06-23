@@ -1,5 +1,5 @@
 ---
-import '../styles/articles.css'
+import BaseLayout from './BaseLayout.astro'
 
 interface Props {
   title: string
@@ -9,41 +9,27 @@ interface Props {
 const { title, date } = Astro.props
 ---
 
-<!doctype html>
-<html lang="en" data-webtui-theme="catppuccin-mocha">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <title>{title}</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
-      integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
-    <main class="mx-auto max-w-3xl">
-      <a href="/articles">←</a>
-      <h1>
-        {title}
-        <time class="text-gray-500" datetime={date.toISOString()}>
-          {
-            date.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })
-          }
-        </time>
-      </h1>
-      <slot />
-    </main>
-    <script async src="https://platform.twitter.com/widgets.js"></script>
-    <script src="../scripts/anchor-links.ts"></script>
-  </body>
-</html>
+<BaseLayout title={title}>
+  <link
+    slot="head"
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
+    crossorigin="anonymous"
+  />
+  <script slot="scripts" async src="https://platform.twitter.com/widgets.js"></script>
+  <a href="/articles">←</a>
+  <h1>
+    {title}
+    <time class="text-gray-500" datetime={date.toISOString()}>
+      {
+        date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      }
+    </time>
+  </h1>
+  <slot />
+</BaseLayout>

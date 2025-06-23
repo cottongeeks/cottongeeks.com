@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 import type { CollectionEntry } from 'astro:content'
+import BaseLayout from '../layouts/BaseLayout.astro'
 
 const articles = await getCollection('articles', ({ data }) => {
   return !data.draft
@@ -14,40 +15,24 @@ function getArticleUrl(article: CollectionEntry<'articles'>) {
   const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
   return `/articles/${formattedDate}-${article.data.slug}`
 }
-
-import '../styles/articles.css'
 ---
 
-<!doctype html>
-<html lang="en" data-webtui-theme="catppuccin-mocha">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <title>Articles</title>
-  </head>
-  <body>
-    <main class="mx-auto max-w-3xl">
-      <h1>Articles</h1>
-      {
-        articles.map(article => (
-          <>
-            <h2>
-              <a href={getArticleUrl(article)}>{article.data.title}</a>
-              <time class="text-gray-500" datetime={article.data.date.toISOString()}>
-                {article.data.date.toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </time>
-            </h2>
-          </>
-        ))
-      }
-    </main>
-  </body>
-</html>
+<BaseLayout title="Articles">
+  <h1>Articles</h1>
+  {
+    articles.map(article => (
+      <>
+        <h2>
+          <a href={getArticleUrl(article)}>{article.data.title}</a>
+          <time class="text-gray-500" datetime={article.data.date.toISOString()}>
+            {article.data.date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </time>
+        </h2>
+      </>
+    ))
+  }
+</BaseLayout>
