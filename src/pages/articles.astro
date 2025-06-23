@@ -32,6 +32,12 @@ function getArticleUrl(article: CollectionEntry<'articles'>) {
             })}
           </time>
         </h2>
+        <p>
+          <span set:text={article.data.description} />
+          <a href={getArticleUrl(article)} class="no-underline">
+            →
+          </a>
+        </p>
       </>
     ))
   }

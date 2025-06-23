@@ -8,6 +8,7 @@ const articles = defineCollection({
     date: z.coerce.date(),
     slug: z.string(),
     draft: z.boolean(),
+    description: z.string(),
   }),
 })
 
