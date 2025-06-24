@@ -4,12 +4,30 @@ import BaseLayout from './BaseLayout.astro'
 interface Props {
   title: string
   date: Date
+  description: string
+  slug: string
 }
 
-const { title, date } = Astro.props
+const { title, date, description, slug } = Astro.props
+
+const articleUrl = `https://www.cottongeeks.com/articles/${slug}`
 ---
 
 <BaseLayout title={title} backlinkToArticles={true}>
+  <!-- Meta tags for social sharing -->
+  <meta slot="head" name="description" content={description} />
+  <meta slot="head" property="og:type" content="article" />
+  <meta slot="head" property="og:site_name" content="Cottongeeks" />
+  <meta slot="head" property="og:title" content={title} />
+  <meta slot="head" property="og:description" content={description} />
+  <meta
+    slot="head"
+    property="og:image"
+    content="https://www.cottongeeks.com/android-chrome-512x512.png"
+  />
+  <meta slot="head" property="og:url" content={articleUrl} />
+  <meta slot="head" name="twitter:card" content="summary_large_image" />
+
   <link
     slot="head"
     rel="stylesheet"
@@ -17,7 +35,7 @@ const { title, date } = Astro.props
     integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
     crossorigin="anonymous"
   />
-  <script slot="scripts" async src="https://platform.twitter.com/widgets.js"></script>
+  <script slot="scripts" is:inline async src="https://platform.twitter.com/widgets.js"></script>
   <h1>
     {title}
     <time class="text-gray-500" datetime={date.toISOString()}>

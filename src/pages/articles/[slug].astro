@@ -20,6 +20,11 @@ const { article } = Astro.props
 const { Content } = await render(article)
 ---
 
-<ArticleLayout title={article.data.title} date={article.data.date}>
+<ArticleLayout
+  title={article.data.title}
+  date={article.data.date}
+  description={article.data.description}
+  slug={generateHtmlSlug(article)}
+>
   <Content />
 </ArticleLayout>
