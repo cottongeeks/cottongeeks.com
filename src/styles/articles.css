@@ -52,6 +52,13 @@ main {
   gap: 1lh;
 }
 
+@media (max-width: 768px) {
+  main {
+    padding-left: 1ch;
+    padding-right: 1ch;
+  }
+}
+
 a:hover {
   opacity: 0.7;
 }
