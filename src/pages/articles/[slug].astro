@@ -1,13 +1,12 @@
 ---
 import { getCollection, render } from 'astro:content'
 import ArticleLayout from '../../layouts/ArticleLayout.astro'
+import { generateHtmlSlug } from '../../utils/slug'
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles')
   return articles.map(article => {
-    const date = article.data.date
-    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
-    const htmlSlug = `${formattedDate}-${article.data.slug}`
+    const htmlSlug = generateHtmlSlug(article)
     return {
       params: {
         slug: htmlSlug,
