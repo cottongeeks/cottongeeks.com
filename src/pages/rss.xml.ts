@@ -7,15 +7,15 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: 'Cottongeeks Blog',
-    description: 'Latest articles from Cottongeeks',
-    site: context.site ?? 'https://cottongeeks.com',
+    description: 'latest articles from cottongeeks',
+    site: context.site ?? 'https://www.cottongeeks.com',
     items: articles
       .filter(article => !article.data.draft)
       .map(article => ({
         title: article.data.title,
         pubDate: article.data.date,
         link: `/articles/${article.data.slug}/`,
-        description: article.data.title, // TODO You might want to add a description field to your schema
+        description: article.data.description,
       })),
     customData: '<language>en-us</language>',
   })
