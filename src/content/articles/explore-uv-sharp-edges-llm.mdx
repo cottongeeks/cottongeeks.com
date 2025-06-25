@@ -1,0 +1,189 @@
+---
+title: 'Exploring sharp edges with uv using the llm package'
+slug: 'explore-uv-sharp-edges-llm'
+date: 2025-06-25
+draft: true
+description: 'In which I explore some sharp edges using the llm package by Simon Willison as an example.'
+---
+
+The [last post](https://www.cottongeeks.com/articles/2025-06-24-fun-with-uv-and-pep-723) about uv and PEP 723 [blew up on Hacker News](https://news.ycombinator.com/item?id=44369388), which indicates that uv is having a moment. However uv is still relatively new and may have some sharp edges. I discovered one such case with a package I am using, which I am documenting below.
+
+## llm
+
+[llm](https://llm.datasette.io/en/stable/) is a popular package by [Simon Willison](https://simonwillison.net/) that is _a CLI tool and Python library for interacting with **OpenAI**, **Anthropic’s Claude**, **Google’s Gemini**, **Meta’s Llama** and dozens of other Large Language Models_.
+
+```
+$ llm who are you
+I am an AI language model created by OpenAI. I'm designed to assist with a wide
+range of questions and topics by providing information, answering queries, and
+engaging in conversation. How can I help you today?
+```
+
+llm also supports a plugin architecture which can be used to extend the tool by adding new commands or models etc. Here is how to install the handy [llm-jq](https://github.com/simonw/llm-jq/tree/main) plugin, which helps to _write and execute jq programs with the help of LLM_
+
+```
+$ llm install llm-jq
+
+$ llm plugins
+[
+  {
+    "name": "llm-jq",
+    "hooks": [
+      "register_commands"
+    ],
+    "version": "0.1.1"
+  }
+]
+```
+
+and to demonstrate its usage using an example from the repo
+
+```
+$ curl -s https://api.github.com/repos/simonw/datasette/issues | \
+  llm jq 'count by user.login, top 3'
+[
+  {
+    "login": "simonw",
+    "count": 7
+  },
+  {
+    "login": "commongeek",
+    "count": 4
+  },
+  {
+    "login": "asg017",
+    "count": 2
+  }
+]
+map(.user.login) | group_by(.) | map({login: .[0], count: length}) | sort_by(.count) | reverse | .[:3]
+```
+
+## Using llm with uv
+
+llm can be installed with `uv tool`
+
+```
+uv tool install llm
+```
+
+installing the `llm-jq` plugin is the same as well.
+
+```
+$ llm install llm-jq
+
+$ llm plugins
+[
+  {
+    "name": "llm-jq",
+    "hooks": [
+      "register_commands"
+    ],
+    "version": "0.1.1"
+  }
+]
+```
+
+It's all good so far. But note that when we do `llm install llm-jq` we are installing the package via pip. So uv does not know about these dependencies. This will become a problem as we will see in the next section.
+
+## Upgrading llm and related plugin issues
+
+Now, if we want to upgrade llm, we can use `uv tool upgrade`
+
+```
+ $ uv tool upgrade llm
+Modified llm environment
+ - llm-jq==0.1.1
+```
+
+This output shows that `uv` upgraded the `llm` tool and made changes to its environment. The `llm-jq` plugin was removed from the environment (the minus sign indicates a removal). This likely happened because uv treats `llm-jq` as an unnecessary package, since it's not a dependency of llm.
+
+Now, if we try to list the plugins, we discover that we have lost the `llm-jq` plugin from the new environment.
+
+```
+$ llm plugins
+[]
+```
+
+This is actually a bug that (as of June 2025) is currently open in the llm repo: [llm loses track of plugins when upgraded (with uv and others) · Issue #575 · simonw/llm · GitHub](https://github.com/simonw/llm/issues/575)
+
+## Workarounds
+
+The comments under the bug list a bunch of workarounds. I am gonna point out a couple of good ones.
+
+## Using llm-uv-tool
+
+[llm-uv-tool](https://github.com/joshuadavidthomas/llm-uv-tool) is itself _a plugin for [LLM](https://github.com/simonw/llm) that enables proper plugin management when LLM is installed as a uv tool. It resolves compatibility issues between uv's isolated environment approach and LLM's plugin system._
+
+It is best to install it along with `llm` the first time we install `llm`
+
+```
+$ uv tool install --with llm-uv-tool llm
+
+
+```
+
+and then proceed to install the `llm-jq` plugin
+
+```
+$ llm install llm-jq
+
+$ llm plugins
+[
+  {
+    "name": "llm-uv-tool",
+    "hooks": [
+      "register_commands"
+    ],
+    "version": "0.1.3"
+  },
+  {
+    "name": "llm-jq",
+    "hooks": [
+      "register_commands"
+    ],
+    "version": "0.1.1"
+  }
+]
+```
+
+Now if we try to upgrade, all the plugins will be retained after the upgrade
+
+```
+$ uv tool upgrade llm
+
+$ llm plugins
+[
+  {
+    "name": "llm-uv-tool",
+    "hooks": [
+      "register_commands"
+    ],
+    "version": "0.1.3"
+  },
+  {
+    "name": "llm-jq",
+    "hooks": [
+      "register_commands"
+    ],
+    "version": "0.1.1"
+  }
+]
+```
+
+The README in the [llm-uv-tool](https://github.com/joshuadavidthomas/llm-uv-tool) repo has notes on more advanced usage.
+
+## Using llm's own upgrade command
+
+Another option which is a bit inferior imo is to self-upgrade `llm` using
+
+```
+llm install -U llm
+```
+
+This will upgrade llm within the same environment it was originally installed by uv, and hence preserve the plugin. The reason this is a slightly inferior option is because this won't work if we want to upgrade llm using uv to another Python version.
+
+```
+uv tool upgrade --python 3.13 llm
+```
+
+This will reinstall llm with Python 3.13, but will not preserve the plugins.
