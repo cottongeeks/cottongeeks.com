@@ -30,7 +30,7 @@ I will go through all the components and how they are configured below. It may b
 
 The site is generated using [Astro](https://astro.build/), which [apparently is the new Wordpress](https://websmith.studio/blog/astro-is-a-developers-dream/) according to some folks. I chose to use Astro mainly because I wanted the ability to embed interactive React components in the Markdown formatted articles, using [MDX](https://mdxjs.com/). Astro also had the right mix of customizability and inbuilt features, so as to not feel too heavy handed or prescriptive. It also had excellent documentation.
 
-I was able to write Typescript code to customize many aspects of the site generation process, for e.g custom URL slugs, clipboard copy for anchor links etc. I plan to customize the site more in the future.
+I was able to write Typescript code to customize many aspects of the site generation process, for e.g custom URL slugs, clipboard copy for anchor links etc. I plan to customize the site even more in the future, and I feel pretty confident Astro won't get in the way of that.
 
 The build for the site happens inside a [Github action](https://github.com/cottongeeks/cottongeeks.com/blob/c7794915fa6a1268920fe9bf443bcc32589abc18/.github/workflows/build-deploy.yml#L12-L25)
 
@@ -78,19 +78,21 @@ Once the certificate is provisioned, it can be used by Cloudfront to serve the s
 
 ## CDN with Cloudfront
 
-I created a pretty standard Cloudfront distribution, and chose to automatically redirect HTTP to HTTPS. I attached the SSL certificate from the previous step.
+I created a pretty standard Cloudfront distribution, and chose to automatically redirect HTTP to HTTPS. I also attached the SSL certificate from the previous step.
 
 ![Cloudfront Distribution](../../images/cloudfront_distribution.png)
 
 ### Pretty URLs and Auto Redirections
 
-I had some very specific and pedantic requirements for the structure of the URLs
+I had some very specific and pedantic requirements for the structure of the URLs:
 
 - I wanted requests made to _cottongeeks.com_ to permanently redirect to *www.cottongeeks.com* before being served. That way there would only be one canonical hostname for the site.
 - I wanted clean URLs without HTML file extensions. So a request made to `/articles` would automatically look for `/articles.html` from the S3 origin.
 - I also wanted to redirect URLs with trailing slashes to their non-slash equivalent. For e.g. `/articles/` would redirect to `/articles`, which would eventually serve `/articles.html` from the origin.
 
-I used [CloudFront Functions](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cloudfront-functions.html) to do this. Here is the source:
+I used [CloudFront Functions](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cloudfront-functions.html) to do this. This is where choosing AWS turned out to be an advantage.
+
+Here is the source:
 
 ```javascript
 var config = {
@@ -152,7 +154,7 @@ I used a [Route53 Hosted Zone](https://docs.aws.amazon.com/Route53/latest/Develo
 
 ## Testing
 
-After configuring all this, I can finally verify that my website is served from the nearest of CloudFront POPs (Points of Presence)
+After configuring all this, I could finally verify that my website is served from the nearest of CloudFront POPs (Points of Presence)
 
 ```
 curl https://www.cottongeeks.com
