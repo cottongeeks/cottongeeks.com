@@ -86,7 +86,7 @@ I created a pretty standard Cloudfront distribution, and chose to automatically 
 
 I had some very specific and pedantic requirements for the structure of the URLs:
 
-- I wanted requests made to _cottongeeks.com_ to permanently redirect to *www.cottongeeks.com* before being served. That way there would only be one canonical hostname for the site.
+- I wanted requests made to _cottongeeks.com_ to permanently redirect to `www.cottongeeks.com` before being served. That way there would only be one canonical hostname for the site.
 - I wanted clean URLs without HTML file extensions. So a request made to `/articles` would automatically look for `/articles.html` from the S3 origin.
 - I also wanted to redirect URLs with trailing slashes to their non-slash equivalent. For e.g. `/articles/` would redirect to `/articles`, which would eventually serve `/articles.html` from the origin.
 
