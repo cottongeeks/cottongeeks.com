@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+Also read [AGENTS.md](./AGENTS.md) for additional instructions on common tasks like upgrading Astro.
+
 ## Project Overview
 
 This is **cottongeeks.com**, a static website/blog for Cottongeeks LLC consultancy built with Astro (latest version). The site features articles written in MDX with full React component support, Conway's Game of Life as homepage background.
@@ -31,10 +33,10 @@ npm run fmt:check
 ## Architecture
 
 ### Tech Stack
-- **Astro 5.9.4** - Static site generator with file-based routing
-- **React 19.1.0** - For interactive components (selective hydration)
+- **Astro 6.1** - Static site generator with file-based routing
+- **React 19** - For interactive components (selective hydration)
 - **TypeScript** - With strict configuration
-- **Tailwind CSS 4.1.10** - For styling
+- **Tailwind CSS 4** - For styling
 - **WebTUI** - For styling
 - **MDX** - For content with React component support
 - **KaTeX** - For mathematical expressions
