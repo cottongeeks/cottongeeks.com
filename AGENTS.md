@@ -88,7 +88,7 @@ npm run fmt:check
 
 When upgrading Astro to a new version:
 
-1. Read the official Astro blog post for the target version (e.g. https://astro.build/blog/astro-610/ for 6.1) to understand new features, breaking changes, and migration steps.
+1. Read the official Astro blog post for the target version (usually included in the prompt) to understand new features, breaking changes, and migration steps.
 2. Run the standard Astro upgrade command:
    ```bash
    npx @astrojs/upgrade
