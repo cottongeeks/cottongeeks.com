@@ -12,6 +12,10 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 // https://astro.build/config
 export default defineConfig({
+  // Disable Astro's dev toolbar to avoid its missing source map requests in dev.
+  devToolbar: {
+    enabled: false,
+  },
   integrations: [react(), embeds(), mdx()],
   markdown: {
     remarkPlugins: [remarkMath],

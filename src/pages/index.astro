@@ -1,5 +1,169 @@
 ---
-import '../styles/index.css'
+const criticalStyle = String.raw`<style>
+  :root {
+    /* Homepage palette mapped onto the landing page tokens. */
+    --background0: #282a36;
+    --background1: #2d2f3d;
+    --background2: #383a4d;
+    --background3: #424559;
+    --foreground0: #d7dae8;
+    --foreground1: #a8aabc;
+    --foreground2: #ffeecb;
+    --font-size: 16px;
+    --line-height: 1.5;
+    --font-family: monospace;
+  }
+
+  html,
+  body {
+    min-height: 100%;
+    background-color: #282a36;
+    color: var(--foreground0);
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    font-weight: 400;
+    line-height: var(--line-height);
+    font-variant-ligatures: common-ligatures;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: none;
+  }
+
+  body {
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  a {
+    color: var(--foreground2);
+    text-decoration: underline;
+  }
+
+  a:hover {
+    opacity: 0.8;
+  }
+
+  /* Background animation container. Keep these styles unchanged in behavior. */
+  .grid-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    background-color: #282a36;
+    gap: 1px;
+    z-index: 0;
+  }
+
+  .cell {
+    width: 100%;
+    height: 100%;
+    background: #2d2f3d;
+    transition:
+      transform 0.2s ease-out,
+      background-color 0.2s ease-out;
+  }
+
+  .cell.alive {
+    background: #383a4d;
+    transform: scale(0.95);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.95);
+    }
+
+    50% {
+      transform: scale(1);
+      background: #424559;
+    }
+
+    100% {
+      transform: scale(0.95);
+      background: #383a4d;
+    }
+  }
+
+  /* Foreground layout for the homepage revamp. */
+  .home-shell {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    width: min(100%, 112ch);
+    margin: 0 auto;
+    padding: 2.5lh 4ch 3lh;
+  }
+
+  .home-main {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 7lh;
+  }
+
+  .home-copy {
+    width: min(100%, 54ch);
+    margin-left: 6ch;
+  }
+
+  .home-logo {
+    display: block;
+    width: 16ch;
+    max-width: 100%;
+    margin: 0 auto 2lh;
+  }
+
+  .home-copy p {
+    color: var(--foreground0);
+    text-wrap: pretty;
+  }
+
+  .home-copy p + p {
+    margin-top: 1.5lh;
+  }
+
+  @media (max-width: 900px) {
+    .home-shell {
+      width: 100%;
+      padding: 2lh 3ch 3lh;
+    }
+
+    .home-main {
+      padding-top: 5lh;
+    }
+
+    .home-copy {
+      margin-left: 3ch;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .home-shell {
+      padding: 2lh 2ch 3lh;
+    }
+
+    .home-logo {
+      width: 14ch;
+      margin-bottom: 1.5lh;
+    }
+
+    .home-main {
+      padding-top: 3lh;
+    }
+
+    .home-copy {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+</style>`
 ---
 
 <!doctype html>
@@ -13,49 +177,31 @@ import '../styles/index.css'
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="alternate" type="application/rss+xml" title="Cottongeeks Blog" href="/rss.xml" />
-    <style>
-      body {
-        background-color: #282a36;
-      }
-    </style>
+    <Fragment set:html={criticalStyle} />
     <script>
       import { GameOfLife } from '../game.ts'
       new GameOfLife('grid')
     </script>
   </head>
   <body>
-    <div id="grid" class="grid-container"></div>
-    <div class="flex min-h-screen flex-col">
-      <div class="relative z-10 flex w-full flex-grow flex-col items-center">
-        <img src="/cottongeeks.svg" alt="Cottongeeks LLC" class="mb-8 w-xl" />
-        <div class="font-poppins max-w-2xl px-8 text-2xl font-[200]">
-          <p class="mb-6">
-            Cottongeeks is a boutique consultancy led by
-            <a href="https://www.linkedin.com/in/debugjois" class="text-[#ffeecb]">Deepak Jois</a>,
-            a software engineer with over 15 years of industry experience. We partner with startup
-            founders and early-stage tech businesses to transform their ideas into production-ready
-            solutions built using modern technology stacks, for e.g. Go, Python, TypeScript, WASM,
-            Docker, and AWS.
+    <div id="grid" class="grid-container" aria-hidden="true"></div>
+
+    <div class="home-shell">
+      <main class="home-main">
+        <div class="home-copy">
+          <img src="/cottongeeks.svg" alt="Cottongeeks LLC" class="home-logo" />
+          <p>
+            Cottongeeks is a solo-powered boutique consultancy led by
+            <a href="https://www.linkedin.com/in/debugjois">Deepak Jois</a>, a software engineer
+            with over 20 years of industry experience. We partner with startup founders and
+            early-stage tech businesses to transform their ideas into production-ready solutions.
           </p>
-          <p class="mb-6">
-            From building proof-of-concepts and APIs to scaling prototypes for production
-            deployment, we provide end-to-end software services with a focus on robustness,
-            maintainability, and scalability.
+          <p>
+            Check out some <a href="/articles">articles</a>, or email us at
+            <a href="mailto:hi@cottongeeks.com">hi@cottongeeks.com</a>
           </p>
-          <p class="mb-6">
-            Our commitment to continuous learning is reflected in our training services and
-            <a href="/articles" class="text-[#ffeecb]">published articles</a>, where we share
-            technical insights and best practices from our project experiences. We also
-            <a href="https://github.com/cottongeeks" class="text-[#ffeecb]"
-              >contribute to open source</a
-            >.
-          </p>
-          <p class="mb-6">Email us at <code class="text-[#ffeecb]">hi@cottongeeks.com</code></p>
         </div>
-      </div>
-      <div class="font-poppins relative z-10 w-full py-4 text-center text-sm font-[200]">
-        © {new Date().getFullYear()} Cottongeeks LLC. All Rights Reserved.
-      </div>
+      </main>
     </div>
   </body>
 </html>
