@@ -65,7 +65,7 @@ npm run fmt:check
 
 ### Version Control
 
-When developing locally, this repo uses Jujutsu (jj) as the version control system, on top of a colocated Git repo. If you are in a worktree, the colocated Git repo will be found in the default location indicated in .jj/repo 
+When developing locally, this repo uses Jujutsu (jj) as the version control system, on top of a colocated Git repo. If you are in a worktree, the colocated Git repo will be found in the default location indicated in .jj/repo
 
 Always attempt to use jj first, falling back to Git only if there are no traces of jj.
 
