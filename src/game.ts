@@ -1,12 +1,17 @@
 const CELL_SIZE = 20 // px
 const ANIMATION_INTERVAL = 100
+const MAX_REPEAT_HISTORY = 12
 
 export class GameOfLife {
   private GRID_COLS: number
   private GRID_ROWS: number
+  // Boolean cell state matrix for the current generation.
   private grid: boolean[][]
   private gridContainer: HTMLElement
   private intervalId: number | null = null
+  // Recent state keys used to detect stable boards and short loops.
+  private recentStateKeys: string[] = []
+  private recentStateSet = new Set<string>()
 
   constructor(containerId: string) {
     this.GRID_COLS = Math.ceil(window.innerWidth / CELL_SIZE)
@@ -65,38 +70,84 @@ export class GameOfLife {
   }
 
   private nextGeneration(): void {
-    const newGrid = this.grid.map(row => [...row])
+    // Candidate next generation derived from the current grid.
+    const newGrid = this.createGrid()
+    const nextStateRows: string[] = []
+    const changedCells: [row: number, col: number][] = []
 
     for (let i = 0; i < this.GRID_ROWS; i++) {
+      let rowState = ''
+
       for (let j = 0; j < this.GRID_COLS; j++) {
         const neighbors = this.countNeighbors(i, j)
-        if (this.grid[i][j]) {
-          newGrid[i][j] = neighbors === 2 || neighbors === 3
-        } else {
-          newGrid[i][j] = neighbors === 3
+        const nextIsAlive = this.grid[i][j] ? neighbors === 2 || neighbors === 3 : neighbors === 3
+
+        newGrid[i][j] = nextIsAlive
+        rowState += nextIsAlive ? '1' : '0'
+
+        // Track DOM updates so we only touch cells that actually changed.
+        if (nextIsAlive !== this.grid[i][j]) {
+          changedCells.push([i, j])
         }
       }
+
+      nextStateRows.push(rowState)
+    }
+
+    const nextStateKey = nextStateRows.join('|')
+
+    // If we've seen this state recently, the board is stuck in a stable or looping cycle.
+    if (this.recentStateSet.has(nextStateKey)) {
+      this.randomize()
+      return
     }
 
     this.grid = newGrid
-    this.updateDisplay()
+    this.updateChangedCells(changedCells)
+    this.recordState(nextStateKey)
   }
 
-  private updateDisplay(): void {
-    for (let i = 0; i < this.GRID_ROWS; i++) {
-      for (let j = 0; j < this.GRID_COLS; j++) {
-        this.updateCellDisplay(i, j)
+  private resetStateHistory(): void {
+    this.recentStateKeys = []
+    this.recentStateSet.clear()
+  }
+
+  private recordState(stateKey: string): void {
+    this.recentStateKeys.push(stateKey)
+    this.recentStateSet.add(stateKey)
+
+    if (this.recentStateKeys.length > MAX_REPEAT_HISTORY) {
+      const expiredStateKey = this.recentStateKeys.shift()
+      if (expiredStateKey) {
+        this.recentStateSet.delete(expiredStateKey)
       }
+    }
+  }
+
+  private updateChangedCells(changedCells: [row: number, col: number][]): void {
+    for (const [row, col] of changedCells) {
+      this.updateCellDisplay(row, col)
     }
   }
 
   private randomize(): void {
+    const stateRows: string[] = []
+
     for (let i = 0; i < this.GRID_ROWS; i++) {
+      let rowState = ''
+
       for (let j = 0; j < this.GRID_COLS; j++) {
-        this.grid[i][j] = Math.random() > 0.85
+        const isAlive = Math.random() > 0.85
+        this.grid[i][j] = isAlive
+        rowState += isAlive ? '1' : '0'
         this.updateCellDisplay(i, j)
       }
+
+      stateRows.push(rowState)
     }
+
+    this.resetStateHistory()
+    this.recordState(stateRows.join('|'))
   }
 
   private setupResizeHandler(): void {
@@ -115,6 +166,7 @@ export class GameOfLife {
   }
 
   public start(): void {
+    this.stop()
     this.randomize()
     this.intervalId = window.setInterval(() => this.nextGeneration(), ANIMATION_INTERVAL)
   }
