@@ -19,18 +19,18 @@
     "@tailwindcss/vite": "^4.2.4",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/parser": "^8.59.0",
+    "@typescript-eslint/parser": "^8.59.1",
     "@webtui/css": "^0.1.7",
     "@webtui/theme-catppuccin": "^0.0.4",
     "@webtui/theme-gruvbox": "^0.0.2",
-    "astro": "^6.1.9",
+    "astro": "^6.2.1",
     "astro-embed": "^0.13.0",
-    "eslint": "^10.2.1",
+    "eslint": "^10.3.0",
     "eslint-plugin-astro": "^1.7.0",
-    "globals": "^17.5.0",
+    "globals": "^17.6.0",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.7.3",
+    "prettier-plugin-tailwindcss": "^0.7.4",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "rehype-autolink-headings": "^7.1.0",
@@ -39,6 +39,6 @@
     "remark-math": "^6.0.0",
     "tailwindcss": "^4.2.4",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.0"
+    "typescript-eslint": "^8.59.1"
   }
 }
