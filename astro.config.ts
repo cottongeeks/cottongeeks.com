@@ -4,9 +4,9 @@ import react from '@astrojs/react'
 import tailwindcss from '@tailwindcss/vite'
 
 import mdx from '@astrojs/mdx'
-import embeds from 'astro-embed/integration'
 import { unified } from '@astrojs/markdown-remark'
 import remarkMath from 'remark-math'
+import remarkEmbeds from './src/components/embeds/remark-plugin'
 import rehypeKatex from 'rehype-katex'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
@@ -17,12 +17,14 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
-  integrations: [react(), embeds(), mdx()],
+  integrations: [react(), mdx()],
   markdown: {
     // Astro 6.4+ pluggable Markdown pipeline: remark/rehype plugins are now
     // configured directly on the unified processor instead of top-level options.
+    // `remarkEmbeds` replaces the astro-embed integration: it auto-converts bare
+    // embed URLs into components and injects their imports.
     processor: unified({
-      remarkPlugins: [remarkMath],
+      remarkPlugins: [remarkMath, remarkEmbeds],
       rehypePlugins: [
         rehypeKatex,
         rehypeSlug,
