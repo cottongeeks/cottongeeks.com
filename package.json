@@ -12,8 +12,9 @@
     "fmt:check": "prettier --check ."
   },
   "dependencies": {
-    "@astrojs/mdx": "^6.0.3",
-    "@astrojs/react": "^5.0.7",
+    "@astrojs/markdown-remark": "^7.2.0",
+    "@astrojs/mdx": "^7.0.0",
+    "@astrojs/react": "^6.0.0",
     "@astrojs/rss": "^4.0.18",
     "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.3.1",
@@ -23,7 +24,7 @@
     "@webtui/css": "^0.1.8",
     "@webtui/theme-catppuccin": "^0.0.4",
     "@webtui/theme-gruvbox": "^0.0.2",
-    "astro": "^6.4.7",
+    "astro": "^7.0.0",
     "astro-embed": "^0.13.0",
     "eslint": "^10.5.0",
     "eslint-plugin-astro": "^1.7.0",
