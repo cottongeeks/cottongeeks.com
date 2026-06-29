@@ -27,9 +27,11 @@ jobs:
         id: upgrades
         run: bash ./.github/scripts/dep-upgrades.sh
 
-      - name: Check formatting
+      # Apply (don't just check) formatting so any reformatting introduced by an
+      # upgraded Prettier is included in the generated PR instead of failing the run.
+      - name: Format
         if: steps.upgrades.outputs.root_updated == 'true'
-        run: npm run fmt:check
+        run: npm run fmt
 
       - name: Lint
         if: steps.upgrades.outputs.root_updated == 'true'
