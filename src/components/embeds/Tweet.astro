@@ -21,8 +21,7 @@ async function fetchTweet(id: string, theme: TweetTheme = 'light') {
   oembedUrl.searchParams.set('theme', theme)
 
   return (await safeGet(oembedUrl.href)) as
-    | { url: string; author_name: string; author_url: string; html: string }
-    | undefined
+    { url: string; author_name: string; author_url: string; html: string } | undefined
 }
 
 const tweet = await fetchTweet(id, theme)

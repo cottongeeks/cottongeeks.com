@@ -70,9 +70,8 @@ export default function remarkEmbeds(): (tree: Root, file: VFile) => void {
     // Plain Markdown can't host JSX or ESM imports; only transform MDX.
     if (file.basename?.endsWith('.md')) return
 
-    tree.children = tree.children.map(
-      (child): RootContent =>
-        child.type === 'paragraph' ? (embedForParagraph(child) ?? child) : child,
+    tree.children = tree.children.map((child): RootContent =>
+      child.type === 'paragraph' ? (embedForParagraph(child) ?? child) : child,
     )
     tree.children.unshift(importsNode())
   }
