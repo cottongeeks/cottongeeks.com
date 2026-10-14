@@ -17,18 +17,23 @@ REPORT_FILE="$2"
 
 cd "$PROJECT_DIR"
 
+# Only consider upgrades compatible with installed packages' peer dependencies,
+# e.g. hold back TypeScript majors until typescript-eslint supports them.
+# Without this, `npm install` fails with ERESOLVE and no PR is opened.
+NCU=(npx npm-check-updates --peer)
+
 # Capture a readable before → after summary for the eventual PR body.
-REPORT=$(npx npm-check-updates 2>/dev/null || true)
+REPORT=$("${NCU[@]}" 2>/dev/null || true)
 
 # Use jsonUpgraded to reliably detect whether anything can be updated.
-UPGRADES=$(npx npm-check-updates --jsonUpgraded 2>/dev/null || echo '{}')
+UPGRADES=$("${NCU[@]}" --jsonUpgraded 2>/dev/null || echo '{}')
 if [ "$UPGRADES" = '{}' ] || [ -z "$UPGRADES" ]; then
   echo "No dependency updates available for $PROJECT_DIR."
   exit 0
 fi
 
 # Apply package.json updates and refresh the lockfile.
-npx npm-check-updates -u
+"${NCU[@]}" -u
 npm install
 
 # Persist the readable report for the PR body.

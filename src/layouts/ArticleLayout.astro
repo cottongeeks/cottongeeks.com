@@ -39,13 +39,11 @@ const articleUrl = `https://www.cottongeeks.com/articles/${slug}`
   <h1>
     {title}
     <time class="text-gray-500" datetime={date.toISOString()}>
-      {
-        date.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })
-      }
+      {date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })}
     </time>
   </h1>
   <slot />

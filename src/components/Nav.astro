@@ -8,15 +8,17 @@ const { backlinkToArticles = false } = Astro.props
 
 <header class="nav-header">
   <div class="nav-content">
-    <div class="nav-left">
-      {backlinkToArticles && <a href="/articles">←</a>}
+    <div class="nav-left">{backlinkToArticles && <a href="/articles">←</a>}</div>
+    <div class="nav-brand">
+      <a href="/">cottongeeks &lt;/&gt;</a>
     </div>
-    <div class="nav-brand"><a href="/">cottongeeks &lt;/&gt;</a></div>
     <div class="nav-links">
-      <a href="https://github.com/cottongeeks" target="_blank" rel="noopener noreferrer"
-        ><i class="nf nf-cod-github"></i></a
-      >
-      <a href="/rss.xml" target="_blank" rel="noopener noreferrer"><i class="nf nf-oct-rss"></i></a>
+      <a href="https://github.com/cottongeeks" target="_blank" rel="noopener noreferrer">
+        <i class="nf nf-cod-github"></i>
+      </a>
+      <a href="/rss.xml" target="_blank" rel="noopener noreferrer">
+        <i class="nf nf-oct-rss"></i>
+      </a>
     </div>
   </div>
 </header>

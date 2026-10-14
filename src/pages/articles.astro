@@ -19,26 +19,24 @@ function getArticleUrl(article: CollectionEntry<'articles'>) {
 
 <BaseLayout title="Articles">
   <h1>Articles</h1>
-  {
-    articles.map(article => (
-      <>
-        <h2>
-          <a href={getArticleUrl(article)}>{article.data.title}</a>{' '}
-          <time class="text-gray-500" datetime={article.data.date.toISOString()}>
-            {article.data.date.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </time>
-        </h2>
-        <p>
-          <span set:text={article.data.description} />{' '}
-          <a href={getArticleUrl(article)} class="no-underline">
-            →
-          </a>
-        </p>
-      </>
-    ))
-  }
+  {articles.map(article => (
+    <>
+      <h2>
+        <a href={getArticleUrl(article)}>{article.data.title}</a>{' '}
+        <time class="text-gray-500" datetime={article.data.date.toISOString()}>
+          {article.data.date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </time>
+      </h2>
+      <p>
+        <span set:text={article.data.description} />{' '}
+        <a href={getArticleUrl(article)} class="no-underline">
+          →
+        </a>
+      </p>
+    </>
+  ))}
 </BaseLayout>
